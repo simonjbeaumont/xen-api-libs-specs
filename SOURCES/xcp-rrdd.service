@@ -1,0 +1,15 @@
+[Unit]
+Description=XCP RRD daemon
+Requires=forkexecd.service xenstored.service
+After=forkexecd.service xenstored.service
+
+[Service]
+Type=forking
+PIDFile=/var/run/xcp-rrdd.pid
+Environment=OCAMLRUNPARAM=b
+EnvironmentFile=-/etc/sysconfig/xcp-rrdd
+ExecStart=/usr/sbin/xcp-rrdd --daemon true $XCP_RRDD_OPTIONS
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
